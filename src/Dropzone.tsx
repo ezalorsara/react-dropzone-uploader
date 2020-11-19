@@ -265,7 +265,9 @@ class Dropzone extends React.Component<IDropzoneProps, { active: boolean; dragge
 
   componentWillUnmount() {
     this.mounted = false
-    for (const fileWithMeta of this.files) this.handleCancel(fileWithMeta)
+    if (resolveValue(this.props.canCancel, this.files)) {
+      for (const fileWithMeta of this.files) this.handleCancel(fileWithMeta)
+    }
   }
 
   forceUpdate = () => {
@@ -319,7 +321,7 @@ class Dropzone extends React.Component<IDropzoneProps, { active: boolean; dragge
 
   handleChangeStatus = (fileWithMeta: IFileWithMeta) => {
     if (!this.props.onChangeStatus) return
-    const { meta = {} } = this.props.onChangeStatus(fileWithMeta, fileWithMeta.meta.status, this.files) || {}
+    const { meta = null } = this.props.onChangeStatus(fileWithMeta, fileWithMeta.meta.status, this.files) || {}
     if (meta) {
       delete meta.status
       fileWithMeta.meta = { ...fileWithMeta.meta, ...meta }
