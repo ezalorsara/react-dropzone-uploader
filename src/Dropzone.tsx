@@ -234,6 +234,8 @@ export interface IDropzoneProps {
   PreviewComponent?: ReactComponent<IPreviewProps>
   InputComponent?: ReactComponent<IInputProps>
   SubmitButtonComponent?: ReactComponent<ISubmitButtonProps>
+
+  layoutProps: object
 }
 
 class Dropzone extends React.Component<IDropzoneProps, { active: boolean; dragged: (File | DataTransferItem)[] }> {
@@ -733,6 +735,7 @@ class Dropzone extends React.Component<IDropzoneProps, { active: boolean; dragge
             onRestartFile: this.handleRestart,
           } as IExtraLayout
         }
+        {...this.props.layoutProps}
       />
     )
   }
@@ -756,6 +759,7 @@ Dropzone.defaultProps = {
   classNames: {},
   styles: {},
   addClassNames: {},
+  layoutProps: {},
 }
 
 // @ts-ignore
@@ -802,6 +806,8 @@ Dropzone.propTypes = {
   PreviewComponent: PropTypes.func,
   SubmitButtonComponent: PropTypes.func,
   LayoutComponent: PropTypes.func,
+
+  layoutProps: PropTypes.object,
 }
 
 export default Dropzone
